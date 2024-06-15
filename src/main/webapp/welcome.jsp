@@ -13,55 +13,55 @@
       margin: 20px;
     }
     table {
-      border: 2px solid black; /* Set border to 2px thick and black */
-      border-collapse: collapse; /* Collapse border spacing */
+      border: 2px solid black;
+      border-collapse: collapse;
     }
     th, td {
-      border: 1px solid black; /* Ensure inner borders are visible */
-      padding: 8px; /* Add padding for better readability */
+      border: 1px solid black;
+      padding: 8px;
     }
     thead {
-      background-color: #3373ca; /* Set background color to blue */
-      color: white; /* Set text color to white */
+      background-color: #3373ca;
+      color: white;
     }
     th {
-      font-weight: normal; /* Set font weight to normal */
+      font-weight: normal;
     }
     .center-text {
-      text-align: center; /* Center text */
+      text-align: center;
     }
     .department-col {
-      width: 20%; /* Adjust as needed */
+      width: 20%;
     }
     .student-id-col {
-      width: 18%; /* Adjust as needed */
+      width: 18%;
     }
     .marks-col {
-      width: 10%; /* Adjust as needed */
+      width: 10%;
     }
     .pass-percent-col {
-      width: 10%; /* Adjust as needed */
+      width: 10%;
     }
-    /* Modal styles */
+
     .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
+      display: none;
+      position: fixed;
+      z-index: 1;
       left: 0;
       top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
       padding-top: 60px;
     }
     .modal-content {
       background-color: #fefefe;
-      margin: 5% auto; /* 15% from the top and centered */
+      margin: 5% auto;
       padding: 20px;
       border: 1px solid #888;
-      width: 80%; /* Could be more or less, depending on screen size */
+      width: 80%;
       border-radius: 20px;
     }
     .close {
@@ -112,20 +112,16 @@
     </thead>
     <tbody>
       <%
-        // Map to store passed student count per department
         Map<String, Integer> passedStudentsCount = new HashMap<>();
         Map<String, Integer> totalStudentsCount = new HashMap<>();
         Map<String, Double> passPercentageMap = new HashMap<>();
 
-        // Iterate over students to calculate pass percentage
         for (Student student : students) {
-          // Update total students count for the department
           if (!totalStudentsCount.containsKey(student.getDepartment())) {
             totalStudentsCount.put(student.getDepartment(), 0);
           }
           totalStudentsCount.put(student.getDepartment(), totalStudentsCount.get(student.getDepartment()) + 1);
 
-          // Update passed students count for the department
           if (student.getMarks() >= 40) {
             if (!passedStudentsCount.containsKey(student.getDepartment())) {
               passedStudentsCount.put(student.getDepartment(), 0);
@@ -134,7 +130,6 @@
           }
         }
 
-        // Calculate pass percentage for each department
         for (String department : totalStudentsCount.keySet()) {
           int totalStudentsInDepartment = totalStudentsCount.get(department);
           int passedStudentsInDepartment = passedStudentsCount.getOrDefault(department, 0);
@@ -147,27 +142,22 @@
           passPercentageMap.put(department, passPercentage);
         }
 
-        // Keep track of the current department and row count for rowspan
         String currentDepartment = "";
         int departmentRowCount = 0;
 
-        // Iterate again to output the table rows
         for (int i = 0; i < students.size(); i++) {
           Student student = students.get(i);
           String department = student.getDepartment();
           int marks = student.getMarks();
 
-          // Update current department and row count for rowspan
           if (!department.equals(currentDepartment)) {
             currentDepartment = department;
             departmentRowCount = (int) students.stream().filter(s -> s.getDepartment().equals(department)).count();
           }
 
-          // Format passPercentage to display as integer if no decimal places
           double passPercentage = passPercentageMap.get(department);
           String formattedPassPercentage = (passPercentage % 1 == 0) ? String.valueOf((int) passPercentage) : String.format("%.2f", passPercentage);
 
-          // Build the table row
           out.print("<tr>");
           if (i == 0 || !students.get(i - 1).getDepartment().equals(department)) {
             out.print("<td class='center-text' rowspan='" + departmentRowCount + "'>" + department + "</td>");
@@ -186,7 +176,6 @@
     <p>Invalid login credentials.</p>
   <% } %>
 
-  <!-- The Modal -->
   <div id="myModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>

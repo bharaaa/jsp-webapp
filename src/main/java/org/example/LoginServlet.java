@@ -10,15 +10,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class LoginServlet extends HttpServlet {
 
-    private final String username = "admin"; // Hardcoded username
-    private final String password = "secret"; // Hardcoded password
-    private final List<Student> students = getStudentList(); // Hardcoded student data
+    private final String username = "admin";
+    private final String password = "secret";
+    private final List<Student> students = getStudentList();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
 
-        // Simple validation with hardcoded credentials
         if (username.equals(userId) && password.equals(password)) {
             Student specificStudent = findCurrentStudent(userId);
             request.setAttribute("students", students);
@@ -45,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 
     private Student findCurrentStudent(String userId) {
         for (Student student : students) {
-            if (student.getStudentID().equals(userId)) {  // Replace with your logic
+            if (student.getStudentID().equals(userId)) {
                 return student;
             }
         }
