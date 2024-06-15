@@ -23,6 +23,7 @@ public class LoginServlet extends HttpServlet {
             Student specificStudent = findCurrentStudent(userId);
             request.setAttribute("students", students);
             request.setAttribute("currentStudent", specificStudent);
+            request.setAttribute("userId", userId);
             request.getRequestDispatcher("/welcome.jsp").forward(request, response);
         } else {
             response.getWriter().write("Invalid user ID or password.");

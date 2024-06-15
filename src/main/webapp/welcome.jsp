@@ -97,6 +97,8 @@
 </head>
 <body>
   <h1>Student Information</h1>
+  <% String userId = (String) request.getAttribute("userId"); %>
+    <p style="font-size: 18px;">Welcome <%= userId %></p>
   <% List<Student> students = (List<Student>) request.getAttribute("students"); %>
   <% if (students != null) { %>
   <table>
